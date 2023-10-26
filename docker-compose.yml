@@ -1,0 +1,12 @@
+version: "3"
+
+services:
+  flask-api:
+    build: .
+    volumes:
+      - .:/code
+    environment:
+      DLBAD_PYTHON_RESTAPI_ENDPOINT_KEY: 34guUfq8EDI0JsQtF5UoIPJ3Wh5MGxRLMVwfeNAJV8r3pJ
+      DLBAD_HASURA_ENDPOINT: http://host.docker.internal:34343/v1/graphql
+    ports:
+      - "6080:5000"
