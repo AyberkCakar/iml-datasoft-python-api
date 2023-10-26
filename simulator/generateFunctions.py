@@ -1,8 +1,7 @@
-
 import numpy as np
 
 def generate_audio_data(time_interval, start, x_factor):
-    frequency = 440  # Temel frekans (A4 notası)
+    frequency = 440
     num_samples = int(time_interval)
     
     time = np.linspace(start, start + time_interval, num_samples)
@@ -16,7 +15,7 @@ def generate_temperature_data(time_interval, start, x_factor, temperature_range)
     num_samples = int(time_interval)
     
     time = np.linspace(start, start + time_interval, num_samples)
-    temperatures = np.random.uniform(*temperature_range, num_samples) * x_factor  # Sıcaklık aralığı içinde rastgele sıcaklık değerleri
+    temperatures = np.random.uniform(*temperature_range, num_samples) * x_factor
     
     return time, temperatures
 
