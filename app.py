@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 from dotenv import load_dotenv
 from simulator.generateData import generate_data
+from algorithms.algorithms import select_algorithm
 load_dotenv()
 import os
 
@@ -37,7 +38,15 @@ def event_trigger():
             return '', 200
         else:
             return 'Error', 400
-    else: 
+    elif data['trigger']['name'] == 'RUN_ALGORITHM':
+        algorithm_settings =data.get('event').get('data').get('new');
+        response = select_algorithm(algorithm_settings)
+
+        if response != None:
+            return '', 200
+        else:
+            return 'Error', 400
+    else:
         return 'Not Found', 404
 
 
