@@ -11,6 +11,7 @@ from algorithms.knn import knn_outlier_detection
 from algorithms.localOutlierFactor import lof_outlier_detection
 from algorithms.lstmAutoencoder import lstm_autoencoder
 from algorithms.oneClassSVM import oneclass_svm_outlier_detection
+from algorithms.pca import pca_outlier_detection
 from algorithms.robustCovariance import robust_covariance_outlier_detection_with_metrics
 
 failure_types = []
@@ -34,8 +35,8 @@ def select_algorithm(algorithm_settings):
         #return lstm_autoencoder(algorithm_settings_id, fetched_data)
     elif (fetched_algorithm == 'lof_outlier_detection'):
         return lof_outlier_detection(algorithm_settings_id, fetched_data)
-    #elif (fetched_algorithm == 'dbscan_outlier_detection'):
-        #return dbscan_outlier_detection(algorithm_settings_id, fetched_data)
+    elif (fetched_algorithm == 'dbscan_outlier_detection'):
+        return dbscan_outlier_detection(algorithm_settings_id, fetched_data)
     elif (fetched_algorithm == 'knn_outlier_detection'):
         return knn_outlier_detection(algorithm_settings_id, fetched_data)
     #elif (fetched_algorithm == 'oneclass_svm_outlier_detection'):
@@ -52,3 +53,6 @@ def select_algorithm(algorithm_settings):
         return kmeans_outlier_detection_with_metrics(algorithm_settings_id, fetched_data)
     elif (fetched_algorithm == 'robust_covariance_outlier_detection_with_metrics'):
         return robust_covariance_outlier_detection_with_metrics(algorithm_settings_id, fetched_data)
+    elif (fetched_algorithm == 'pca_outlier_detection'):
+        return pca_outlier_detection(algorithm_settings_id, fetched_data)
+    
