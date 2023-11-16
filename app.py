@@ -5,8 +5,6 @@ from algorithms.algorithms import select_algorithm
 load_dotenv()
 import os
 
-
-
 app = Flask(__name__)
 
 DLBAD_PYTHON_RESTAPI_ENDPOINT_KEY = os.getenv("DLBAD_PYTHON_RESTAPI_ENDPOINT_KEY")
@@ -32,7 +30,7 @@ def event_trigger():
 
     if data['trigger']['name'] == 'RUN_SIMULATOR':
         simulatorId = data.get('event').get('data').get('new').get('id')
-        response = generate_data(10, simulatorId)
+        response = generate_data(1000, simulatorId)
 
         if response != None:
             return '', 200
