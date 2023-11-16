@@ -7,6 +7,7 @@ from algorithms.dbscanOutlierDetection import dbscan_outlier_detection
 from algorithms.deepAutoencoders import deep_autoencoder_outlier_detection
 from algorithms.ensemleMethods import ensemble_outlier_detection
 from algorithms.gaussianMixture import gmm_outlier_detection
+from algorithms.gru import gru_anomaly_detection
 from algorithms.hasuraRequest import fetch_algorithm, fetch_real_dataset, fetch_simulator_dataset
 from algorithms.hbos import hbos_outlier_detection
 from algorithms.isolationForest import isolation_forest
@@ -76,3 +77,5 @@ def select_algorithm(algorithm_settings):
         return lstm_anomaly_detection(algorithm_settings_id, fetched_data)
     elif (fetched_algorithm == 'rnn_anomaly_detection'):
         return rnn_anomaly_detection(algorithm_settings_id, fetched_data)
+    elif (fetched_algorithm == 'gru_anomaly_detection'):
+        return gru_anomaly_detection(algorithm_settings_id, fetched_data)
