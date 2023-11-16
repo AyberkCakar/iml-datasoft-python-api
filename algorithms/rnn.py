@@ -27,29 +27,20 @@ def rnn_anomaly_detection(algorithm_settings_id, fetched_data):
 
     # Modeli eğit
     model.fit(scaled_features, scaled_features, epochs=10, batch_size=32, shuffle=True)
-
-    try:
-    # Tahminlerin yapılması ve yeniden yapılandırma hatasının hesaplanması
-        predictions = model.predict(scaled_features)
+    predictions = model.predict(scaled_features)
         
-        if predictions.shape[1] == 1:
-            predictions = np.expand_dims(predictions, axis=-1)
+    if predictions.shape[1] == 1:
+        predictions = np.expand_dims(predictions, axis=-1)
 
-        mse = np.mean(np.power(scaled_features - predictions, 2), axis=1)
-        threshold = np.percentile(mse, 95)
-        model_predictions = (mse > threshold).astype(int)
+    mse = np.mean(np.power(scaled_features - predictions, 2), axis=1)
+    threshold = np.percentile(mse, 95)
+    model_predictions = (mse > threshold).astype(int)
 
-          # Performans metriklerinin hesaplanması
-        accuracy = accuracy_score(true_labels, model_predictions)
-        precision = precision_score(true_labels, model_predictions, zero_division=0)
-        recall = recall_score(true_labels, model_predictions, zero_division=0)
-        f1 = f1_score(true_labels, model_predictions, zero_division=0)
+    # Performans metriklerinin hesaplanması
+    accuracy = accuracy_score(true_labels, model_predictions)
+    precision = precision_score(true_labels, model_predictions, zero_division=0)
+    recall = recall_score(true_labels, model_predictions, zero_division=0)
+    f1 = f1_score(true_labels, model_predictions, zero_division=0)
 
-        # Sonuçların döndürülmesi
-        return set_algorithm_result({'accuracy': accuracy, 'precision': precision, 'recall': recall, 'f1': f1}, algorithm_settings_id)
-
-    except Exception as e: # work on python 3.x
-        print(e)
-
-
+    return set_algorithm_result({'accuracy': accuracy, 'precision': precision, 'recall': recall, 'f1': f1}, algorithm_settings_id)
   
