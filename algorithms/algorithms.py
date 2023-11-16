@@ -17,6 +17,7 @@ from algorithms.lstm import lstm_anomaly_detection
 from algorithms.lstmAutoencoder import lstm_autoencoder
 from algorithms.oneClassSVM import oneclass_svm_outlier_detection
 from algorithms.pca import pca_outlier_detection
+from algorithms.rnn import rnn_anomaly_detection
 from algorithms.robustCovariance import robust_covariance_outlier_detection_with_metrics
 from algorithms.xgboost import xgboost_outlier_detection
 
@@ -73,3 +74,5 @@ def select_algorithm(algorithm_settings):
         return xgboost_outlier_detection(algorithm_settings_id, fetched_data)
     elif (fetched_algorithm == 'lstm_anomaly_detection'):
         return lstm_anomaly_detection(algorithm_settings_id, fetched_data)
+    elif (fetched_algorithm == 'rnn_anomaly_detection'):
+        return rnn_anomaly_detection(algorithm_settings_id, fetched_data)
