@@ -50,5 +50,5 @@ def select_algorithm(algorithm_settings):
         #return ensemble_outlier_detection(algorithm_settings_id, fetched_data)
     elif (fetched_algorithm == 'kmeans_outlier_detection_with_metrics'):
         return kmeans_outlier_detection_with_metrics(algorithm_settings_id, fetched_data)
-    #elif (fetched_algorithm == 'robust_covariance_outlier_detection_with_metrics'):
-        #return robust_covariance_outlier_detection_with_metrics(algorithm_settings_id, fetched_data)
+    elif (fetched_algorithm == 'robust_covariance_outlier_detection_with_metrics'):
+        return robust_covariance_outlier_detection_with_metrics(algorithm_settings_id, fetched_data)
