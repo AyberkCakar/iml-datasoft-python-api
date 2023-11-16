@@ -3,6 +3,7 @@ from algorithms.abod import abod_outlier_detection
 from algorithms.autoencoder import autoencoder_outlier_detection
 from algorithms.baggingOutlier import feature_bagging_outlier_detection
 from algorithms.dbscanOutlierDetection import dbscan_outlier_detection
+from algorithms.deepAutoencoders import deep_autoencoder_outlier_detection
 from algorithms.ensemleMethods import ensemble_outlier_detection
 from algorithms.gaussianMixture import gmm_outlier_detection
 from algorithms.hasuraRequest import fetch_algorithm, fetch_real_dataset, fetch_simulator_dataset
@@ -61,4 +62,5 @@ def select_algorithm(algorithm_settings):
         return gmm_outlier_detection(algorithm_settings_id, fetched_data)
     elif (fetched_algorithm == 'hbos_outlier_detection'):
         return hbos_outlier_detection(algorithm_settings_id, fetched_data)
-    
+    elif (fetched_algorithm == 'deep_autoencoder_outlier_detection'):
+        return deep_autoencoder_outlier_detection(algorithm_settings_id, fetched_data)
