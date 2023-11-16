@@ -2,12 +2,13 @@ from sklearn.ensemble import IsolationForest
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 import pandas as pd
 from algorithms.hasuraRequest import set_algorithm_result
+from algorithms.normalization import normalization_data
 
 def isolation_forest(algorithm_settings_id, fetched_data):
     data = pd.DataFrame(fetched_data)
 
     true_labels = data['tag'].apply(lambda x: 0 if x == 'Normal' else 1)
-    features = data.drop(['tag', 'time'], axis=1)
+    features = normalization_data(data)
 
     iso_forest = IsolationForest(n_estimators=100, contamination=0.1, random_state=42)
     iso_forest.fit(features)
