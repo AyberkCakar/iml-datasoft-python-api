@@ -36,16 +36,16 @@ def select_algorithm(algorithm_settings):
 
     if (fetched_algorithm == 'IsolationForest'):
         return isolation_forest(algorithm_settings_id, fetched_data)
-    #elif (fetched_algorithm == 'LSTM_Autoencoder'):
-        #return lstm_autoencoder(algorithm_settings_id, fetched_data)
+    elif (fetched_algorithm == 'LSTM_Autoencoder'):
+        return lstm_autoencoder(algorithm_settings_id, fetched_data)
     elif (fetched_algorithm == 'lof_outlier_detection'):
         return lof_outlier_detection(algorithm_settings_id, fetched_data)
     elif (fetched_algorithm == 'dbscan_outlier_detection'):
         return dbscan_outlier_detection(algorithm_settings_id, fetched_data)
     elif (fetched_algorithm == 'knn_outlier_detection'):
         return knn_outlier_detection(algorithm_settings_id, fetched_data)
-    elif (fetched_algorithm == 'oneclass_svm_outlier_detection'):
-        return oneclass_svm_outlier_detection(algorithm_settings_id, fetched_data)
+    #elif (fetched_algorithm == 'oneclass_svm_outlier_detection'):
+       # return oneclass_svm_outlier_detection(algorithm_settings_id, fetched_data)
     elif (fetched_algorithm == 'autoencoder_outlier_detection'):
         return autoencoder_outlier_detection(algorithm_settings_id, fetched_data)
     elif (fetched_algorithm == 'abod_outlier_detection'):
