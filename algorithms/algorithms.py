@@ -6,6 +6,7 @@ from algorithms.dbscanOutlierDetection import dbscan_outlier_detection
 from algorithms.ensemleMethods import ensemble_outlier_detection
 from algorithms.gaussianMixture import gmm_outlier_detection
 from algorithms.hasuraRequest import fetch_algorithm, fetch_real_dataset, fetch_simulator_dataset
+from algorithms.hbos import hbos_outlier_detection
 from algorithms.isolationForest import isolation_forest
 from algorithms.kmeans import kmeans_outlier_detection_with_metrics
 from algorithms.knn import knn_outlier_detection
@@ -58,4 +59,6 @@ def select_algorithm(algorithm_settings):
         return pca_outlier_detection(algorithm_settings_id, fetched_data)
     elif (fetched_algorithm == 'gmm_outlier_detection'):
         return gmm_outlier_detection(algorithm_settings_id, fetched_data)
+    elif (fetched_algorithm == 'hbos_outlier_detection'):
+        return hbos_outlier_detection(algorithm_settings_id, fetched_data)
     
