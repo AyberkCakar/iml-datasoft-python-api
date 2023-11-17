@@ -8,7 +8,7 @@ from algorithms.deepAutoencoders import deep_autoencoder_outlier_detection
 from algorithms.ensemleMethods import ensemble_outlier_detection
 from algorithms.gaussianMixture import gmm_outlier_detection
 from algorithms.gru import gru_anomaly_detection
-from algorithms.hasuraRequest import fetch_algorithm, fetch_real_dataset, fetch_simulator_dataset
+from algorithms.hasuraRequest import fetch_algorithm, fetch_real_dataset, fetch_simulator_dataset, fetch_algorithm_setting
 from algorithms.hbos import hbos_outlier_detection
 from algorithms.isolationForest import isolation_forest
 from algorithms.kmeans import kmeans_outlier_detection_with_metrics
@@ -20,62 +20,58 @@ from algorithms.oneClassSVM import oneclass_svm_outlier_detection
 from algorithms.pca import pca_outlier_detection
 from algorithms.rnn import rnn_anomaly_detection
 from algorithms.robustCovariance import robust_covariance_outlier_detection_with_metrics
+from algorithms.rrcf import robust_random_cut_forest
 from algorithms.xgboost import xgboost_outlier_detection
 
 failure_types = []
 
-def select_algorithm(algorithm_settings):
-    algorithm_settings_id = algorithm_settings.get('id')
 
-    fetched_algorithm = fetch_algorithm(algorithm_settings.get('algorithm_id')).get('data').get('algorithms_by_pk').get('algorithmName')
+def call_algorithm(algorithm_name, algorithm_settings_id, algorithmId, fetched_data):
+    algorithm_functions = {
+        'IsolationForest': isolation_forest,
+        'LSTM_Autoencoder': lstm_autoencoder,
+        'lof_outlier_detection': lof_outlier_detection,
+        'knn_outlier_detection': knn_outlier_detection,
+        'autoencoder_outlier_detection': autoencoder_outlier_detection,
+        'abod_outlier_detection': abod_outlier_detection,
+        'feature_bagging_outlier_detection': feature_bagging_outlier_detection,
+        'ensemble_outlier_detection': ensemble_outlier_detection,
+        'kmeans_outlier_detection_with_metrics': kmeans_outlier_detection_with_metrics,
+        'robust_covariance_outlier_detection_with_metrics': robust_covariance_outlier_detection_with_metrics,
+        'pca_outlier_detection': pca_outlier_detection,
+        'gmm_outlier_detection': gmm_outlier_detection,
+        'hbos_outlier_detection': hbos_outlier_detection,
+        'deep_autoencoder_outlier_detection': deep_autoencoder_outlier_detection,
+        'cblof_outlier_detection': cblof_outlier_detection,
+        'xgboost_outlier_detection': xgboost_outlier_detection,
+        'lstm_anomaly_detection': lstm_anomaly_detection,
+        'rnn_anomaly_detection': rnn_anomaly_detection,
+        'gru_anomaly_detection': gru_anomaly_detection,
+        'robust_random_cut_forest': robust_random_cut_forest,
+        # 'dbscan_outlier_detection': dbscan_outlier_detection,
+        # 'oneclass_svm_outlier_detection': oneclass_svm_outlier_detection,
+    }
 
-    fetched_data = [];
-    
-    if algorithm_settings.get('simulator_id') != None:
-        fetched_data = fetch_simulator_dataset(algorithm_settings.get('simulator_id')).get('data').get('datasets')[0].get('result')
+    return algorithm_functions.get(algorithm_name, lambda *args: None)(algorithm_settings_id, algorithmId, fetched_data)
+
+
+def select_algorithm(algorithm_results):
+    algorithm_results_id = algorithm_results.get('id')
+    algorithm_settings_id = algorithm_results.get('algorithm_setting_id')
+
+    fetched_algorithm = fetch_algorithm(algorithm_results.get(
+        'algorithm_id')).get('data').get('algorithms_by_pk')
+    algorithmName = fetched_algorithm.get('algorithmName')
+    algorithmId = fetched_algorithm.get('id')
+
+    fetced_algorithm_setting = fetch_algorithm_setting(
+        algorithm_settings_id).get('data').get('algorithm_settings_by_pk')
+
+    if fetced_algorithm_setting.get('simulatorId') != None:
+        fetched_data = fetch_simulator_dataset(fetced_algorithm_setting.get(
+            'simulatorId')).get('data').get('datasets')[0].get('result')
     else:
-        fetched_data =fetch_real_dataset(algorithm_settings.get('real_dataset_id')).get('data').get('datasets')[0].get('result')
+        fetched_data = fetch_real_dataset(fetced_algorithm_setting.get(
+            'realDatasetId')).get('data').get('datasets')[0].get('result')
 
-
-    if (fetched_algorithm == 'IsolationForest'):
-        return isolation_forest(algorithm_settings_id, fetched_data)
-    elif (fetched_algorithm == 'LSTM_Autoencoder'):
-        return lstm_autoencoder(algorithm_settings_id, fetched_data)
-    elif (fetched_algorithm == 'lof_outlier_detection'):
-        return lof_outlier_detection(algorithm_settings_id, fetched_data)
-    #elif (fetched_algorithm == 'dbscan_outlier_detection'):
-        #return dbscan_outlier_detection(algorithm_settings_id, fetched_data)
-    elif (fetched_algorithm == 'knn_outlier_detection'):
-        return knn_outlier_detection(algorithm_settings_id, fetched_data)
-    #elif (fetched_algorithm == 'oneclass_svm_outlier_detection'):
-       # return oneclass_svm_outlier_detection(algorithm_settings_id, fetched_data)
-    elif (fetched_algorithm == 'autoencoder_outlier_detection'):
-        return autoencoder_outlier_detection(algorithm_settings_id, fetched_data)
-    elif (fetched_algorithm == 'abod_outlier_detection'):
-        return abod_outlier_detection(algorithm_settings_id, fetched_data)
-    elif (fetched_algorithm == 'feature_bagging_outlier_detection'):
-        return feature_bagging_outlier_detection(algorithm_settings_id, fetched_data)
-    elif (fetched_algorithm == 'ensemble_outlier_detection'):
-        return ensemble_outlier_detection(algorithm_settings_id, fetched_data)
-    elif (fetched_algorithm == 'kmeans_outlier_detection_with_metrics'):
-        return kmeans_outlier_detection_with_metrics(algorithm_settings_id, fetched_data)
-    elif (fetched_algorithm == 'robust_covariance_outlier_detection_with_metrics'):
-        return robust_covariance_outlier_detection_with_metrics(algorithm_settings_id, fetched_data)
-    elif (fetched_algorithm == 'pca_outlier_detection'):
-        return pca_outlier_detection(algorithm_settings_id, fetched_data)
-    elif (fetched_algorithm == 'gmm_outlier_detection'):
-        return gmm_outlier_detection(algorithm_settings_id, fetched_data)
-    elif (fetched_algorithm == 'hbos_outlier_detection'):
-        return hbos_outlier_detection(algorithm_settings_id, fetched_data)
-    elif (fetched_algorithm == 'deep_autoencoder_outlier_detection'):
-        return deep_autoencoder_outlier_detection(algorithm_settings_id, fetched_data)
-    elif (fetched_algorithm == 'cblof_outlier_detection'):
-        return cblof_outlier_detection(algorithm_settings_id, fetched_data)
-    elif (fetched_algorithm == 'xgboost_outlier_detection'):
-        return xgboost_outlier_detection(algorithm_settings_id, fetched_data)
-    elif (fetched_algorithm == 'lstm_anomaly_detection'):
-        return lstm_anomaly_detection(algorithm_settings_id, fetched_data)
-    elif (fetched_algorithm == 'rnn_anomaly_detection'):
-        return rnn_anomaly_detection(algorithm_settings_id, fetched_data)
-    elif (fetched_algorithm == 'gru_anomaly_detection'):
-        return gru_anomaly_detection(algorithm_settings_id, fetched_data)
+    return call_algorithm(algorithmName, algorithm_settings_id, algorithmId, fetched_data)
