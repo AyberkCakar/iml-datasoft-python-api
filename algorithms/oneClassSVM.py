@@ -1,17 +1,17 @@
-from sklearn.covariance import EllipticEnvelope
+from sklearn.svm import OneClassSVM
 import pandas as pd
 from algorithms.normalization import normalization_data
 from algorithms.updateAlgorithmResult import calculate_metrics_and_update_algorithm_result
 
 
-def robust_covariance_outlier_detection_with_metrics(algorithm_settings_id, algorithm_id, fetched_data):
+def oneclass_svm_outlier_detection(algorithm_settings_id, algorithm_id, fetched_data):
     data = pd.DataFrame(fetched_data)
     true_labels = data['tag'].apply(lambda x: 0 if x == 'Normal' else 1)
     features = normalization_data(data)
 
-    robust_cov = EllipticEnvelope(contamination=0.1)
-    robust_cov.fit(features)
-    predictions = robust_cov.predict(features)
+    oc_svm = OneClassSVM(gamma='auto', nu=0.05)
+    oc_svm.fit(features)
+    predictions = oc_svm.predict(features)
 
     model_predictions = [1 if x == -1 else 0 for x in predictions]
 
