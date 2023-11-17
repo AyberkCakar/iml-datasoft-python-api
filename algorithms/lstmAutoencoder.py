@@ -54,4 +54,4 @@ def lstm_autoencoder(algorithm_settings_id, algorithm_id, fetched_data):
 
     binary_predictions = np.any(model_predictions == 1, axis=1).astype(int)
 
-    return calculate_metrics_and_update_algorithm_result(true_labels, binary_predictions, algorithm_settings_id, algorithm_id)
+    return calculate_metrics_and_update_algorithm_result(downsampled_true_labels, binary_predictions, algorithm_settings_id, algorithm_id)
