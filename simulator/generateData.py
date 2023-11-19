@@ -5,6 +5,7 @@ import random
 
 failure_types = []
 
+
 def generate_data(interval_count, simulatorId):
 
     fetched_data = fetch_failure_types(simulatorId)
@@ -24,37 +25,41 @@ def generate_data(interval_count, simulatorId):
                 }
                 failure_types.append(transformed_item)
 
-    output_data = {'time': [], 'amplitude': [],'temperature': [],'vibration': [], 'tag': []}
-    
-    random_numbers = np.random.randint(0, interval_count, 10) 
-   
+    output_data = {'time': [], 'amplitude': [],
+                   'temperature': [], 'vibration': [], 'tag': []}
+
+    random_numbers = np.random.randint(0, interval_count, 10)
+
     start = 0
-    
+
     for i in range(interval_count):
         selected_object = random.choice(failure_types)
         time_interval = selected_object['timeInterval']
-        
+
         if i in random_numbers:
-            sound_anomaly_multiplier= selected_object['soundAnomalyMultiplier']
-            temperature_anomaly_multiplier= selected_object['temperatureAnomalyMultiplier']
-            vibration_anomaly_multiplier= selected_object['vibrationAnomalyMultiplier']
+            sound_anomaly_multiplier = selected_object['soundAnomalyMultiplier']
+            temperature_anomaly_multiplier = selected_object['temperatureAnomalyMultiplier']
+            vibration_anomaly_multiplier = selected_object['vibrationAnomalyMultiplier']
             tag = selected_object['failureName']
         else:
-            sound_anomaly_multiplier= 1
-            temperature_anomaly_multiplier= 1
-            vibration_anomaly_multiplier= 1
+            sound_anomaly_multiplier = 1
+            temperature_anomaly_multiplier = 1
+            vibration_anomaly_multiplier = 1
             tag = 'Normal'
-            
-        time_points, audio_data = generate_audio_data(time_interval, start, sound_anomaly_multiplier)
-        time_points, temperature_data = generate_temperature_data(time_interval, start, temperature_anomaly_multiplier, (30, 40))
-        time_points, vibration_data = generate_vibration_data(time_interval, start, vibration_anomaly_multiplier)
+
+        time_points, audio_data = generate_audio_data(
+            time_interval, start, sound_anomaly_multiplier)
+        time_points, temperature_data = generate_temperature_data(
+            time_interval, start, temperature_anomaly_multiplier, (30, 40))
+        time_points, vibration_data = generate_vibration_data(
+            time_interval, start, vibration_anomaly_multiplier)
 
         output_data['time'].extend(time_points)
         output_data['amplitude'].extend(audio_data)
         output_data['temperature'].extend(temperature_data)
         output_data['vibration'].extend(vibration_data)
         output_data['tag'].extend([tag] * len(time_points))
-        
+
         start += time_interval
 
     return set_simulator_data(output_data, simulatorId)

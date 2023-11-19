@@ -4,6 +4,7 @@ import os
 
 DLBAD_HASURA_ENDPOINT = os.getenv("DLBAD_HASURA_ENDPOINT")
 
+
 def fetch_failure_types(simulatorId):
     client = GraphqlClient(endpoint=DLBAD_HASURA_ENDPOINT, verify=True)
 
@@ -25,7 +26,8 @@ def fetch_failure_types(simulatorId):
     variables = {"simulatorId": simulatorId}
 
     try:
-        data = asyncio.run(client.execute_async(query=query, variables=variables))
+        data = asyncio.run(client.execute_async(
+            query=query, variables=variables))
         return data
     except Exception as err:
         print("An error occurred:", err)
@@ -45,13 +47,14 @@ def set_simulator_data(data, simulatorId):
 
     variables = {
         "object": {
-        "result": data,
-        "simulatorId": simulatorId
-    }}
+            "result": data,
+            "simulatorId": simulatorId
+        }}
 
     try:
-        data = asyncio.run(client.execute_async(query=query, variables=variables))
-        id  = data.get('data').get('insert_datasets_one').get('id')
+        data = asyncio.run(client.execute_async(
+            query=query, variables=variables))
+        id = data.get('data').get('insert_datasets_one').get('id')
         return id
     except Exception as err:
         print("An error occurred:", err)
