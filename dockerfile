@@ -12,4 +12,6 @@ EXPOSE 5000
 
 COPY . .
 
-CMD ["flask", "run"]
+RUN chmod +x start.sh
+
+CMD ["bash", "/code/start.sh"]
