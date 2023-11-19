@@ -8,5 +8,21 @@ services:
     environment:
       DLBAD_PYTHON_RESTAPI_ENDPOINT_KEY: 34guUfq8EDI0JsQtF5UoIPJ3Wh5MGxRLMVwfeNAJV8r3pJ
       DLBAD_HASURA_ENDPOINT: http://host.docker.internal:34343/v1/graphql
+      RABBITMQ_HOST: host.docker.internal
+      RABBITMQ_DEFAULT_USER: user
+      RABBITMQ_DEFAULT_PASS: password
     ports:
       - "6080:5000"
+
+  rabbitmq:
+    image: "rabbitmq:3-management"
+    hostname: "rabbitmq"
+    environment:
+      RABBITMQ_ERLANG_COOKIE: "SWQOKODSQALRPCLNMEQG"
+      RABBITMQ_DEFAULT_USER: user
+      RABBITMQ_DEFAULT_PASS: password
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    labels:
+      NAME: "rabbitmq"
