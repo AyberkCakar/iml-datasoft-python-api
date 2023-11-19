@@ -56,22 +56,26 @@ def call_algorithm(algorithm_name, algorithm_settings_id, algorithmId, fetched_d
 
 
 def select_algorithm(algorithm_results):
-    algorithm_results_id = algorithm_results.get('id')
     algorithm_settings_id = algorithm_results.get('algorithm_setting_id')
 
-    fetched_algorithm = fetch_algorithm(algorithm_results.get(
-        'algorithm_id')).get('data').get('algorithms_by_pk')
-    algorithmName = fetched_algorithm.get('algorithmName')
-    algorithmId = fetched_algorithm.get('id')
+    algorithm_id = algorithm_results.get('algorithm_id')
+    fetched_algorithm = fetch_algorithm(algorithm_id)
+
+    algorithm = fetched_algorithm.get('data').get('algorithms_by_pk')
+    algorithmName = algorithm.get('algorithmName')
+    algorithmId = algorithm.get('id')
 
     fetced_algorithm_setting = fetch_algorithm_setting(
         algorithm_settings_id).get('data').get('algorithm_settings_by_pk')
 
-    if fetced_algorithm_setting.get('simulatorId') != None:
-        fetched_data = fetch_simulator_dataset(fetced_algorithm_setting.get(
-            'simulatorId')).get('data').get('datasets')[0].get('result')
-    else:
-        fetched_data = fetch_real_dataset(fetced_algorithm_setting.get(
-            'realDatasetId')).get('data').get('datasets')[0].get('result')
+    try:
+        if fetced_algorithm_setting.get('simulatorId') != None:
+            fetched_data = fetch_simulator_dataset(fetced_algorithm_setting.get(
+                'simulatorId')).get('data').get('datasets')[0].get('result')
+        else:
+            fetched_data = fetch_real_dataset(fetced_algorithm_setting.get(
+                'realDatasetId')).get('data').get('datasets')[0].get('result')
 
-    return call_algorithm(algorithmName, algorithm_settings_id, algorithmId, fetched_data)
+        return call_algorithm(algorithmName, algorithm_settings_id, algorithmId, fetched_data)
+    except Exception as exc:
+        print(algorithmName, exc)

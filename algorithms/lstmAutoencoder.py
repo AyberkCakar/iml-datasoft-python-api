@@ -38,7 +38,7 @@ def lstm_autoencoder(algorithm_settings_id, algorithm_id, fetched_data):
 
     autoencoder = build_lstm_autoencoder(timesteps, num_features)
     autoencoder.fit(features_reshaped, features_reshaped,
-                    epochs=20, batch_size=256, shuffle=True)
+                    epochs=2, batch_size=256, shuffle=True)
 
     reconstructed = autoencoder.predict(features_reshaped)
     reconstruction_error = np.mean(

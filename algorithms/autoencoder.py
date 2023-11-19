@@ -22,7 +22,7 @@ def autoencoder_outlier_detection(algorithm_settings_id, algorithm_id, fetched_d
 
     autoencoder = Model(input_layer, decoded)
     autoencoder.compile(optimizer=Adam(lr=0.001), loss='mean_squared_error')
-    autoencoder.fit(X_scaled, X_scaled, epochs=20, batch_size=32,
+    autoencoder.fit(X_scaled, X_scaled, epochs=2, batch_size=32,
                     shuffle=True, validation_split=0.2, verbose=0)
 
     predictions = autoencoder.predict(X_scaled)

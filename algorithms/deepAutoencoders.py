@@ -19,7 +19,7 @@ def deep_autoencoder_outlier_detection(algorithm_settings_id, algorithm_id, fetc
     decoded = Dense(features.shape[1], activation='sigmoid')(decoded)
     autoencoder = Model(inputs=input_layer, outputs=decoded)
     autoencoder.compile(optimizer='adam', loss='mean_squared_error')
-    autoencoder.fit(features, features, epochs=20, batch_size=32,
+    autoencoder.fit(features, features, epochs=2, batch_size=32,
                     shuffle=True, validation_split=0.2, verbose=0)
 
     # Yeniden yapılandırma hatası

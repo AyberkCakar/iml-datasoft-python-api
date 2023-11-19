@@ -1,6 +1,8 @@
 import asyncio
+from dotenv import load_dotenv
 from python_graphql_client import GraphqlClient
 import os
+load_dotenv()
 
 DLBAD_HASURA_ENDPOINT = os.getenv("DLBAD_HASURA_ENDPOINT")
 
@@ -53,7 +55,6 @@ def fetch_real_dataset(realDatasetId):
             datasets(where: {realDatasetId: {_eq: $realDatasetId}}) {
                 result
                 id
-                isRealData
             }
         }
      """
@@ -71,11 +72,10 @@ def fetch_simulator_dataset(simulatorId):
     client = GraphqlClient(endpoint=DLBAD_HASURA_ENDPOINT, verify=True)
 
     query = """
-        query getRealDataset($simulatorId: Int!) {
+        query getSimulatorDataset($simulatorId: Int!) {
             datasets(where: {simulatorId: {_eq: $simulatorId}}) {
                 result
                 id
-                isRealData
             }
         }
      """
@@ -110,8 +110,7 @@ def update_algorithm_result(result_data, algorithm_settings_id, algorithm_id):
         data = asyncio.run(client.execute_async(
             query=query, variables=variables))
 
-        affected_rows = data.get('data').get(
+        return data.get('data').get(
             'update_algorithm_results').get('affected_rows')
-        return affected_rows
     except Exception as err:
         return None

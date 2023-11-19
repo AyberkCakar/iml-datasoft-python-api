@@ -25,7 +25,7 @@ def rnn_anomaly_detection(algorithm_settings_id, algorithm_id, fetched_data):
     model.compile(optimizer='adam', loss='mean_squared_error')
 
     model.fit(scaled_features, scaled_features,
-              epochs=10, batch_size=32, shuffle=True)
+              epochs=2, batch_size=32, shuffle=True)
     predictions = model.predict(scaled_features)
 
     if predictions.shape[1] == 1:
