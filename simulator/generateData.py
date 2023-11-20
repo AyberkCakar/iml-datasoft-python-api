@@ -1,12 +1,16 @@
 from simulator.hasuraRequest import fetch_failure_types, set_simulator_data
-from simulator.generateFunctions import generate_audio_data, generate_temperature_data, generate_vibration_data
+from simulator.generateFunctions import generate_sound_data, generate_temperature_data, generate_vibration_data
 import numpy as np
 import random
 
 failure_types = []
 
 
-def generate_data(interval_count, simulatorId):
+def generate_data(interval_count, simulatorData):
+    simulatorId = simulatorData.get('id')
+    expectedSoundValue = simulatorData.get('expected_sound_value')
+    expectedTemperatureValue = simulatorData.get('expected_temperature_value')
+    expectedVibrationValue = simulatorData.get('expected_vibration_value')
 
     fetched_data = fetch_failure_types(simulatorId)
     if fetched_data is not None:
@@ -47,12 +51,15 @@ def generate_data(interval_count, simulatorId):
             vibration_anomaly_multiplier = 1
             tag = 'Normal'
 
-        time_points, audio_data = generate_audio_data(
-            time_interval, start, sound_anomaly_multiplier)
+        minExpectedTemperatureValue = int(expectedTemperatureValue) - 5
+        maxExpectedTemperatureValue = int(expectedTemperatureValue) + 5
+
+        time_points, audio_data = generate_sound_data(
+            time_interval, start, sound_anomaly_multiplier, expectedSoundValue)
         time_points, temperature_data = generate_temperature_data(
-            time_interval, start, temperature_anomaly_multiplier, (30, 40))
+            time_interval, start, temperature_anomaly_multiplier, (minExpectedTemperatureValue, maxExpectedTemperatureValue))
         time_points, vibration_data = generate_vibration_data(
-            time_interval, start, vibration_anomaly_multiplier)
+            time_interval, start, vibration_anomaly_multiplier, expectedVibrationValue)
 
         output_data['time'].extend(time_points)
         output_data['amplitude'].extend(audio_data)
