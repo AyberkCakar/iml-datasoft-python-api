@@ -26,7 +26,7 @@ from algorithms.xgboost import xgboost_outlier_detection
 failure_types = []
 
 
-def call_algorithm(algorithm_name, algorithm_settings_id, algorithmId, fetched_data):
+def call_algorithm(algorithm_name, algorithm_settings_id, algorithmId, fetched_data, sensor_types):
     algorithm_functions = {
         'Isolation Forest': isolation_forest,
         'LSTM Autoencoder': lstm_autoencoder,
@@ -52,7 +52,7 @@ def call_algorithm(algorithm_name, algorithm_settings_id, algorithmId, fetched_d
         # 'oneclass_svm_outlier_detection': oneclass_svm_outlier_detection,
     }
 
-    return algorithm_functions.get(algorithm_name, lambda *args: None)(algorithm_settings_id, algorithmId, fetched_data)
+    return algorithm_functions.get(algorithm_name, lambda *args: None)(algorithm_settings_id, algorithmId, fetched_data, sensor_types)
 
 
 def select_algorithm(algorithm_results):
@@ -68,6 +68,8 @@ def select_algorithm(algorithm_results):
     fetced_algorithm_setting = fetch_algorithm_setting(
         algorithm_settings_id).get('data').get('algorithm_settings_by_pk')
 
+    sensor_types = fetced_algorithm_setting.get('sensorTypes').split(',')
+
     try:
         if fetced_algorithm_setting.get('simulatorId') != None:
             fetched_data = fetch_simulator_dataset(fetced_algorithm_setting.get(
@@ -76,6 +78,6 @@ def select_algorithm(algorithm_results):
             fetched_data = fetch_real_dataset(fetced_algorithm_setting.get(
                 'realDatasetId')).get('data').get('datasets')[0].get('result')
 
-        return call_algorithm(algorithmName, algorithm_settings_id, algorithmId, fetched_data)
+        return call_algorithm(algorithmName, algorithm_settings_id, algorithmId, fetched_data, sensor_types)
     except Exception as exc:
         print(algorithmName, exc)

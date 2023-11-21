@@ -35,6 +35,7 @@ def fetch_algorithm_setting(algorithm_settings_id):
             algorithm_settings_by_pk(id: $algorithmSettingsId) {
                 realDatasetId
                 simulatorId
+                sensorTypes
             }
         }
      """

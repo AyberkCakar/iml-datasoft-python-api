@@ -5,12 +5,12 @@ from algorithms.normalization import normalization_data
 from algorithms.updateAlgorithmResult import calculate_metrics_and_update_algorithm_result
 
 
-def kmeans_outlier_detection_with_metrics(algorithm_settings_id, algorithm_id, fetched_data, n_clusters=5):
+def kmeans_outlier_detection_with_metrics(algorithm_settings_id, algorithm_id, fetched_data, sensor_types):
     data = pd.DataFrame(fetched_data)
     true_labels = data['tag'].apply(lambda x: 0 if x == 'Normal' else 1)
-    features = normalization_data(data)
+    features = normalization_data(data, sensor_types)
 
-    kmeans = KMeans(n_clusters=n_clusters)
+    kmeans = KMeans(n_clusters=5)
     kmeans.fit(features)
     cluster_centers = kmeans.cluster_centers_
     labels = kmeans.labels_

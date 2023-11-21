@@ -6,10 +6,10 @@ from algorithms.normalization import normalization_data
 from algorithms.updateAlgorithmResult import calculate_metrics_and_update_algorithm_result
 
 
-def deep_autoencoder_outlier_detection(algorithm_settings_id, algorithm_id, fetched_data):
+def deep_autoencoder_outlier_detection(algorithm_settings_id, algorithm_id, fetched_data, sensor_types):
     data = pd.DataFrame(fetched_data)
     true_labels = data['tag'].apply(lambda x: 0 if x == 'Normal' else 1)
-    features = normalization_data(data.drop(['tag', 'time'], axis=1))
+    features = normalization_data(data, sensor_types)
 
     # Autoencoder modeli
     input_layer = Input(shape=(features.shape[1],))

@@ -6,10 +6,10 @@ import numpy as np
 from algorithms.updateAlgorithmResult import calculate_metrics_and_update_algorithm_result
 
 
-def rnn_anomaly_detection(algorithm_settings_id, algorithm_id, fetched_data):
+def rnn_anomaly_detection(algorithm_settings_id, algorithm_id, fetched_data, sensor_types):
     data = pd.DataFrame(fetched_data)
     true_labels = data['tag'].apply(lambda x: 0 if x == 'Normal' else 1)
-    features = data.drop(['tag', 'time'], axis=1)
+    features = data[sensor_types]
 
     scaler = StandardScaler()
     scaled_features = scaler.fit_transform(features)

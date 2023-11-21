@@ -24,10 +24,10 @@ def build_lstm_autoencoder(timesteps, num_features, latent_dim=64):
     return autoencoder
 
 
-def lstm_autoencoder(algorithm_settings_id, algorithm_id, fetched_data):
+def lstm_autoencoder(algorithm_settings_id, algorithm_id, fetched_data, sensor_types):
     data = pd.DataFrame(fetched_data)
     true_labels = data['tag'].apply(lambda x: 0 if x == 'Normal' else 1)
-    features = normalization_data(data)
+    features = normalization_data(data, sensor_types)
 
     timesteps = 10
     samples = len(features) // timesteps

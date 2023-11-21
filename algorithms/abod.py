@@ -4,10 +4,10 @@ from algorithms.normalization import normalization_data
 from algorithms.updateAlgorithmResult import calculate_metrics_and_update_algorithm_result
 
 
-def abod_outlier_detection(algorithm_settings_id, algorithm_id, fetched_data):
+def abod_outlier_detection(algorithm_settings_id, algorithm_id, fetched_data, sensor_types):
     data = pd.DataFrame(fetched_data)
     true_labels = data['tag'].apply(lambda x: 0 if x == 'Normal' else 1)
-    features = normalization_data(data)
+    features = normalization_data(data, sensor_types)
 
     abod = ABOD()
     abod.fit(features)

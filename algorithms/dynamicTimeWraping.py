@@ -4,10 +4,10 @@ from algorithms.normalization import normalization_data
 from algorithms.updateAlgorithmResult import calculate_metrics_and_update_algorithm_result
 
 
-def dtw_clustering(algorithm_settings_id, algorithm_id, fetched_data):
+def dtw_clustering(algorithm_settings_id, algorithm_id, fetched_data, sensor_types):
     data = pd.DataFrame(fetched_data)
     true_labels = data['tag'].apply(lambda x: 0 if x == 'Normal' else 1)
-    features = normalization_data(data)
+    features = normalization_data(data, sensor_types)
 
     model = TimeSeriesKMeans(n_clusters=2, metric="dtw", max_iter=2)
     labels = model.fit_predict(features)
