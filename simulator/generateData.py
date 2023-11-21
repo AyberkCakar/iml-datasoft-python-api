@@ -29,7 +29,7 @@ def generate_data(interval_count, simulatorData):
                 }
                 failure_types.append(transformed_item)
 
-    output_data = {'time': [], 'amplitude': [],
+    output_data = {'time': [], 'sound': [],
                    'temperature': [], 'vibration': [], 'tag': []}
 
     random_numbers = np.random.randint(0, interval_count, 10)
@@ -62,7 +62,7 @@ def generate_data(interval_count, simulatorData):
             time_interval, start, vibration_anomaly_multiplier, expectedVibrationValue)
 
         output_data['time'].extend(time_points)
-        output_data['amplitude'].extend(audio_data)
+        output_data['sound'].extend(audio_data)
         output_data['temperature'].extend(temperature_data)
         output_data['vibration'].extend(vibration_data)
         output_data['tag'].extend([tag] * len(time_points))
