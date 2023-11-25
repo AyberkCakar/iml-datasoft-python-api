@@ -8,9 +8,16 @@ failure_types = []
 
 def generate_data(interval_count, simulatorData):
     simulatorId = simulatorData.get('id')
-    expectedSoundValue = simulatorData.get('expected_sound_value')
-    expectedTemperatureValue = simulatorData.get('expected_temperature_value')
-    expectedVibrationValue = simulatorData.get('expected_vibration_value')
+    min_expected_sound_value = simulatorData.get('min_expected_sound_value')
+    max_expected_sound_value = simulatorData.get('max_expected_sound_value')
+    min_expected_temperature_value = simulatorData.get(
+        'min_expected_temperature_value')
+    max_expected_temperature_value = simulatorData.get(
+        'max_expected_temperature_value')
+    min_expected_vibration_value = simulatorData.get(
+        'min_expected_vibration_value')
+    max_expected_vibration_value = simulatorData.get(
+        'max_expected_vibration_value')
 
     fetched_data = fetch_failure_types(simulatorId)
     if fetched_data is not None:
@@ -51,15 +58,12 @@ def generate_data(interval_count, simulatorData):
             vibration_anomaly_multiplier = 1
             tag = 'Normal'
 
-        minExpectedTemperatureValue = int(expectedTemperatureValue) - 5
-        maxExpectedTemperatureValue = int(expectedTemperatureValue) + 5
-
         time_points, audio_data = generate_sound_data(
-            time_interval, start, sound_anomaly_multiplier, expectedSoundValue)
+            time_interval, start, sound_anomaly_multiplier, (min_expected_sound_value, max_expected_sound_value))
         time_points, temperature_data = generate_temperature_data(
-            time_interval, start, temperature_anomaly_multiplier, (minExpectedTemperatureValue, maxExpectedTemperatureValue))
+            time_interval, start, temperature_anomaly_multiplier, (min_expected_temperature_value, max_expected_temperature_value))
         time_points, vibration_data = generate_vibration_data(
-            time_interval, start, vibration_anomaly_multiplier, expectedVibrationValue)
+            time_interval, start, vibration_anomaly_multiplier, (min_expected_vibration_value, max_expected_vibration_value))
 
         output_data['time'].extend(time_points)
         output_data['sound'].extend(audio_data)
