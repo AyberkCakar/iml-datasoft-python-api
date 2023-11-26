@@ -1,8 +1,8 @@
+import os
 from dotenv import load_dotenv
 import pika
 import json
 from algorithms.algorithms import select_algorithm
-import os
 
 load_dotenv()
 RABBITMQ_HOST = os.getenv("RABBITMQ_HOST")
@@ -25,6 +25,7 @@ def start_consumer():
         pika.ConnectionParameters(host=RABBITMQ_HOST, credentials=pika.PlainCredentials(
             RABBITMQ_DEFAULT_USER, RABBITMQ_DEFAULT_PASS))
     )
+
     channel = connection.channel()
 
     channel.queue_declare(queue='algorithm_queue', durable=True)
