@@ -5,10 +5,16 @@ import os
 load_dotenv()
 
 DLBAD_HASURA_ENDPOINT = os.getenv("DLBAD_HASURA_ENDPOINT")
+DLBAD_HASURA_SECRET_KEY = os.getenv("DLBAD_HASURA_SECRET_KEY")
+
+headers = {
+    'x-hasura-admin-secret': DLBAD_HASURA_SECRET_KEY,
+}
 
 
 def fetch_algorithm(algorithmId):
-    client = GraphqlClient(endpoint=DLBAD_HASURA_ENDPOINT, verify=True)
+    client = GraphqlClient(endpoint=DLBAD_HASURA_ENDPOINT,
+                           headers=headers, verify=True)
 
     query = """
         query getAlgorithm($algorithmId: Int!) {
@@ -21,7 +27,7 @@ def fetch_algorithm(algorithmId):
     variables = {"algorithmId": algorithmId}
 
     try:
-        return asyncio.run(client.execute_async(query=query, variables=variables))
+        return asyncio.run(client.execute_async(query=query, headers=headers, variables=variables))
     except Exception as err:
         print("An error occurred:", err)
         return None
@@ -42,7 +48,7 @@ def fetch_algorithm_setting(algorithm_settings_id):
     variables = {"algorithmSettingsId": algorithm_settings_id}
 
     try:
-        return asyncio.run(client.execute_async(query=query, variables=variables))
+        return asyncio.run(client.execute_async(query=query, headers=headers, variables=variables))
     except Exception as err:
         print("An error occurred:", err)
         return None
@@ -63,7 +69,7 @@ def fetch_real_dataset(realDatasetId):
     variables = {"realDatasetId": realDatasetId}
 
     try:
-        return asyncio.run(client.execute_async(query=query, variables=variables))
+        return asyncio.run(client.execute_async(query=query, headers=headers, variables=variables))
     except Exception as err:
         print("An error occurred:", err)
         return None
@@ -84,7 +90,7 @@ def fetch_simulator_dataset(simulatorId):
     variables = {"simulatorId": simulatorId}
 
     try:
-        return asyncio.run(client.execute_async(query=query, variables=variables))
+        return asyncio.run(client.execute_async(query=query, headers=headers, variables=variables))
     except Exception as err:
         print("An error occurred:", err)
         return None
@@ -109,7 +115,7 @@ def update_algorithm_result(result_data, algorithm_settings_id, algorithm_id):
 
     try:
         data = asyncio.run(client.execute_async(
-            query=query, variables=variables))
+            query=query, headers=headers, variables=variables))
 
         return data.get('data').get(
             'update_algorithm_results').get('affected_rows')

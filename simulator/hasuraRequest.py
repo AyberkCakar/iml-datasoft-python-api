@@ -3,10 +3,16 @@ from python_graphql_client import GraphqlClient
 import os
 
 DLBAD_HASURA_ENDPOINT = os.getenv("DLBAD_HASURA_ENDPOINT")
+DLBAD_HASURA_SECRET_KEY = os.getenv("DLBAD_HASURA_SECRET_KEY")
+
+headers = {
+    'x-hasura-admin-secret': DLBAD_HASURA_SECRET_KEY,
+}
 
 
 def fetch_failure_types(simulatorId):
-    client = GraphqlClient(endpoint=DLBAD_HASURA_ENDPOINT, verify=True)
+    client = GraphqlClient(endpoint=DLBAD_HASURA_ENDPOINT,
+                           headers=headers, verify=True)
 
     query = """
         query getSimulatorFailureTypes($simulatorId: Int!) {
@@ -27,7 +33,7 @@ def fetch_failure_types(simulatorId):
 
     try:
         data = asyncio.run(client.execute_async(
-            query=query, variables=variables))
+            query=query, headers=headers, variables=variables))
         return data
     except Exception as err:
         print("An error occurred:", err)
@@ -53,7 +59,7 @@ def set_simulator_data(data, simulatorId):
 
     try:
         data = asyncio.run(client.execute_async(
-            query=query, variables=variables))
+            query=query, headers=headers, variables=variables))
         id = data.get('data').get('insert_datasets_one').get('id')
         return id
     except Exception as err:
