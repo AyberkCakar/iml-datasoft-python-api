@@ -59,11 +59,11 @@ def generate_data(interval_count, simulatorData):
             tag = 'Normal'
 
         time_points, audio_data = generate_sound_data(
-            time_interval, start, sound_anomaly_multiplier, (min_expected_sound_value, max_expected_sound_value))
+            time_interval, start, sound_anomaly_multiplier, min_expected_sound_value, max_expected_sound_value)
         time_points, temperature_data = generate_temperature_data(
-            time_interval, start, temperature_anomaly_multiplier, (min_expected_temperature_value, max_expected_temperature_value))
+            time_interval, start, temperature_anomaly_multiplier, min_expected_temperature_value, max_expected_temperature_value)
         time_points, vibration_data = generate_vibration_data(
-            time_interval, start, vibration_anomaly_multiplier, (min_expected_vibration_value, max_expected_vibration_value))
+            time_interval, start, vibration_anomaly_multiplier, min_expected_vibration_value, max_expected_vibration_value)
 
         output_data['time'].extend(time_points)
         output_data['sound'].extend(audio_data)
