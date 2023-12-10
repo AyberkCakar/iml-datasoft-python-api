@@ -27,7 +27,7 @@ def lstm_anomaly_detection(algorithm_settings_id, algorithm_id, fetched_data, se
     reshaped_features = np.reshape(
         scaled_features, (scaled_features.shape[0], scaled_features.shape[1], 1))
     model.fit(reshaped_features, scaled_features,
-              epochs=10, batch_size=32, shuffle=True)
+              epochs=20, batch_size=32, shuffle=True)
 
     predictions = model.predict(reshaped_features)
     mse = np.mean(np.power(scaled_features - predictions, 2), axis=1)

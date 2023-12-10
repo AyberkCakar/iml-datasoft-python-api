@@ -38,7 +38,7 @@ def lstm_autoencoder(algorithm_settings_id, algorithm_id, fetched_data, sensor_t
 
     autoencoder = build_lstm_autoencoder(timesteps, num_features)
     autoencoder.fit(features_reshaped, features_reshaped,
-                    epochs=2, batch_size=256, shuffle=True)
+                    epochs=20, batch_size=256, shuffle=True)
 
     reconstructed = autoencoder.predict(features_reshaped)
     reconstruction_error = np.mean(
@@ -48,10 +48,7 @@ def lstm_autoencoder(algorithm_settings_id, algorithm_id, fetched_data, sensor_t
     predictions = reconstruction_error > threshold
     model_predictions = np.where(predictions, 1, 0)
 
-    downsampled_true_labels = true_labels[::10]
-    downsampled_true_labels = downsampled_true_labels.astype(
-        int)  # Tamsayıya dönüştür
-
+    downsampled_true_labels = true_labels[:samples * timesteps: timesteps]
     binary_predictions = np.any(model_predictions == 1, axis=1).astype(int)
 
     return calculate_metrics_and_update_algorithm_result(downsampled_true_labels, binary_predictions, algorithm_settings_id, algorithm_id)

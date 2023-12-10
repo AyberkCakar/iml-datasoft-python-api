@@ -17,7 +17,7 @@ def callback(ch, method, properties, body):
     if response is not None:
         print("The algorithm run successfully.")
     else:
-        print("There was a problem running the algorithm.")
+        print("There was a problem running the algorithm.", algorithm_results)
 
 
 def start_consumer():
