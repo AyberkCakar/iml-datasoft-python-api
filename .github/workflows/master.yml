@@ -1,7 +1,7 @@
 name: deploy to prod
 on:
   release:
-    types: [published]
+    types: [ published ]
 
 jobs:
   build_and_push:
@@ -30,7 +30,7 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           push: true
-          tags: ghcr.io/ayberkcakar/dlbad-dl-api:${{ env.RELEASE_VERSION }}, ghcr.io/ayberkcakar/dlbad-dl-api:latest
+          tags: ghcr.io/ayberkcakar/iml-datasoft-dl-api:${{ env.RELEASE_VERSION }}, ghcr.io/ayberkcakar/iml-datasoft-dl-api:latest
           platforms: linux/amd64,linux/arm64
 
   doorkeeper_open:

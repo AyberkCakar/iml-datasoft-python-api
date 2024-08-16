@@ -2,16 +2,16 @@ import asyncio
 from python_graphql_client import GraphqlClient
 import os
 
-DLBAD_HASURA_ENDPOINT = os.getenv("DLBAD_HASURA_ENDPOINT")
-DLBAD_HASURA_SECRET_KEY = os.getenv("DLBAD_HASURA_SECRET_KEY")
+IML_DATASOFT_HASURA_ENDPOINT = os.getenv("IML_DATASOFT_HASURA_ENDPOINT")
+IML_DATASOFT_HASURA_SECRET_KEY = os.getenv("IML_DATASOFT_HASURA_SECRET_KEY")
 
 headers = {
-    'x-hasura-admin-secret': DLBAD_HASURA_SECRET_KEY,
+    'x-hasura-admin-secret': IML_DATASOFT_HASURA_SECRET_KEY,
 }
 
 
 def fetch_failure_types(simulatorId):
-    client = GraphqlClient(endpoint=DLBAD_HASURA_ENDPOINT,
+    client = GraphqlClient(endpoint=IML_DATASOFT_HASURA_ENDPOINT,
                            headers=headers, verify=True)
 
     query = """
@@ -41,7 +41,7 @@ def fetch_failure_types(simulatorId):
 
 
 def set_simulator_data(data, simulatorId):
-    client = GraphqlClient(endpoint=DLBAD_HASURA_ENDPOINT, verify=True)
+    client = GraphqlClient(endpoint=IML_DATASOFT_HASURA_ENDPOINT, verify=True)
 
     query = """
        mutation INSERT_DATASET($object: datasets_insert_input!) {

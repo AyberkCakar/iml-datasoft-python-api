@@ -4,16 +4,16 @@ from python_graphql_client import GraphqlClient
 import os
 load_dotenv()
 
-DLBAD_HASURA_ENDPOINT = os.getenv("DLBAD_HASURA_ENDPOINT")
-DLBAD_HASURA_SECRET_KEY = os.getenv("DLBAD_HASURA_SECRET_KEY")
+IML_DATASOFT_HASURA_ENDPOINT = os.getenv("IML_DATASOFT_HASURA_ENDPOINT")
+IML_DATASOFT_HASURA_SECRET_KEY = os.getenv("IML_DATASOFT_HASURA_SECRET_KEY")
 
 headers = {
-    'x-hasura-admin-secret': DLBAD_HASURA_SECRET_KEY,
+    'x-hasura-admin-secret': IML_DATASOFT_HASURA_SECRET_KEY,
 }
 
 
 def fetch_algorithm(algorithmId):
-    client = GraphqlClient(endpoint=DLBAD_HASURA_ENDPOINT,
+    client = GraphqlClient(endpoint=IML_DATASOFT_HASURA_ENDPOINT,
                            headers=headers, verify=True)
 
     query = """
@@ -34,7 +34,7 @@ def fetch_algorithm(algorithmId):
 
 
 def fetch_algorithm_setting(algorithm_settings_id):
-    client = GraphqlClient(endpoint=DLBAD_HASURA_ENDPOINT, verify=True)
+    client = GraphqlClient(endpoint=IML_DATASOFT_HASURA_ENDPOINT, verify=True)
 
     query = """
         query getAlgorithmSetting($algorithmSettingsId: Int!) {
@@ -55,7 +55,7 @@ def fetch_algorithm_setting(algorithm_settings_id):
 
 
 def fetch_real_dataset(realDatasetId):
-    client = GraphqlClient(endpoint=DLBAD_HASURA_ENDPOINT, verify=True)
+    client = GraphqlClient(endpoint=IML_DATASOFT_HASURA_ENDPOINT, verify=True)
 
     query = """
         query getRealDataset($realDatasetId: Int!) {
@@ -76,7 +76,7 @@ def fetch_real_dataset(realDatasetId):
 
 
 def fetch_simulator_dataset(simulatorId):
-    client = GraphqlClient(endpoint=DLBAD_HASURA_ENDPOINT, verify=True)
+    client = GraphqlClient(endpoint=IML_DATASOFT_HASURA_ENDPOINT, verify=True)
 
     query = """
         query getSimulatorDataset($simulatorId: Int!) {
@@ -97,7 +97,7 @@ def fetch_simulator_dataset(simulatorId):
 
 
 def update_algorithm_result(result_data, algorithm_settings_id, algorithm_id):
-    client = GraphqlClient(endpoint=DLBAD_HASURA_ENDPOINT, verify=True)
+    client = GraphqlClient(endpoint=IML_DATASOFT_HASURA_ENDPOINT, verify=True)
 
     query = """
         mutation updateAlgorithmResult($algorithmId: Int!, $algorithmSettingId: Int!, $result: jsonb!) {

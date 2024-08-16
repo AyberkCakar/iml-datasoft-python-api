@@ -2,6 +2,10 @@ FROM python:3.9
 
 WORKDIR /code
 
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    libhdf5-dev
+
 ENV FLASK_APP=app.py
 ENV FLASK_RUN_HOST=0.0.0.0
 

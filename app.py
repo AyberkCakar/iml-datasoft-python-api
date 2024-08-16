@@ -12,8 +12,8 @@ app = Flask(__name__)
 RABBITMQ_HOST = os.getenv("RABBITMQ_HOST")
 RABBITMQ_DEFAULT_USER = os.getenv("RABBITMQ_DEFAULT_USER")
 RABBITMQ_DEFAULT_PASS = os.getenv("RABBITMQ_DEFAULT_PASS")
-DLBAD_PYTHON_RESTAPI_ENDPOINT_KEY = os.getenv(
-    "DLBAD_PYTHON_RESTAPI_ENDPOINT_KEY")
+IML_DATASOFT_PYTHON_RESTAPI_ENDPOINT_KEY = os.getenv(
+    "IML_DATASOFT_PYTHON_RESTAPI_ENDPOINT_KEY")
 
 
 def send_to_queue(data):
@@ -40,7 +40,7 @@ def send_to_queue(data):
 
 def validate_request(func):
     def wrapper(*args, **kwargs):
-        if not request.headers['x-api-key'] == DLBAD_PYTHON_RESTAPI_ENDPOINT_KEY:
+        if not request.headers['x-api-key'] == IML_DATASOFT_PYTHON_RESTAPI_ENDPOINT_KEY:
             return jsonify({'error': 'Invalid request'}), 400
         return func(*args, **kwargs)
     return wrapper
@@ -48,7 +48,7 @@ def validate_request(func):
 
 @app.route('/', methods=['GET'])
 def home_endpoint():
-    return 'DLBAD AI API'
+    return 'IML DataSoft API'
 
 
 @app.route('/event-trigger', methods=['POST'])

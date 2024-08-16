@@ -10,7 +10,7 @@ def pca_outlier_detection(algorithm_settings_id, algorithm_id, fetched_data, sen
     true_labels = data['tag'].apply(lambda x: 0 if x == 'Normal' else 1)
     features = normalization_data(data, sensor_types)
 
-    pca = PCA(n_components=2)
+    pca = PCA(n_components=len(sensor_types))
     pca_features = pca.fit_transform(features)
 
     reconstruction_error = np.sum(

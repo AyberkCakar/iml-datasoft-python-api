@@ -1,6 +1,6 @@
-# DLBAD Python REST API Project
+# IML DataSoft Python REST API Project
 
-Deploy methods of DLBAD Python REST API project are given below.
+Deploy methods of IML DataSoft Python REST API project are given below.
 
 ### Project Publishing Instructions
 The project can be published in two different ways.
@@ -40,7 +40,7 @@ To publish the project in Pip, go to the project directory and write the followi
 ```
 
 ### Project Information
-It is the Pyhton REST API of the DLBAD Project, connected to the Hasura backend. There are Simulator and AI Hub in the Python API. It is supported with Flask structure and queue structure is established with rabbitmq.
+It is the Python REST API of the IML DataSoft Project, connected to the Hasura backend. There are Simulator and AI Hub in the Python API. It is supported with Flask structure and queue structure is established with rabbitmq.
 
 #### Simulator
 It is triggered when a record is added to the simulators table in the backend and generates synthetic data containing selected error types.
