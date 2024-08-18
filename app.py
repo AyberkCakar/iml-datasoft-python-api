@@ -58,7 +58,7 @@ def event_trigger():
 
     if data['trigger']['name'] == 'RUN_SIMULATOR':
         simulatorData = data.get('event').get('data').get('new')
-        response = generate_data(500, simulatorData)
+        response = generate_data(simulatorData)
 
         if response != None:
             return '', 200

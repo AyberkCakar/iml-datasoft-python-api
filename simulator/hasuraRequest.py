@@ -20,7 +20,6 @@ def fetch_failure_types(simulatorId):
                 failure_type {
                 failureName
                 id
-                period
                 soundAnomalyMultiplier
                 temperatureAnomalyMultiplier
                 timeInterval
