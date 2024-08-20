@@ -2,6 +2,11 @@
 
 Deploy methods of IML DataSoft Python REST API project are given below.
 
+## Introduction And Installation Guide
+
+- Introduction: https://www.youtube.com/watch?v=RcLk0Nz2ZSk
+- Installation Guide: https://www.youtube.com/watch?v=_S2LX0eOtWI
+
 ### Project Publishing Instructions
 The project can be published in two different ways.
 * Docker
